@@ -9,6 +9,7 @@ const url1 = 'https://raw.githubusercontent.com/open-telemetry/opentelemetry-js/
 function getData(url) {
   return new Promise((resolve, reject) => {
     // [ISSUE 2] Baggage not getting propagated through Apollo GraphQL resolvers.
+    // This works for express-graphql, but for not Apollo.
     console.log('getdata baggage', otel.propagation.getBaggage(otel.context.active()));
     https.get(url, (response) => {
       let data = '';
