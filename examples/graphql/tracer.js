@@ -25,7 +25,8 @@ registerInstrumentations({
       // depth: 2,
       // mergeItems: true,
     }),
-    new HttpInstrumentation(),
+    // [ISSUE 1] Propagation through express middleware DOES NOT work if HttpInstrumentation is present!
+    // new HttpInstrumentation(),
     new ExpressInstrumentation(),
   ],
 });
