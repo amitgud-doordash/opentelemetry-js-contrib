@@ -2,11 +2,15 @@
 
 const https = require('https');
 const graphql = require('graphql');
+const otel = require('@opentelemetry/api');
 
 const url1 = 'https://raw.githubusercontent.com/open-telemetry/opentelemetry-js/main/package.json';
 
 function getData(url) {
   return new Promise((resolve, reject) => {
+    // [ISSUE 2] Baggage not getting propagated through Apollo GraphQL resolvers.
+    // This works for express-graphql, but for not Apollo.
+    console.log('getdata baggage', otel.propagation.getBaggage(otel.context.active()));
     https.get(url, (response) => {
       let data = '';
       response.on('data', (chunk) => {
@@ -61,12 +65,12 @@ function getAuthor(id) {
 
 function prepareData() {
   addAuthor('John', 'Poland', 'Szczecin');
-  addAuthor('Alice', 'Poland', 'Warsaw');
-  addAuthor('Bob', 'England', 'London');
-  addAuthor('Christine', 'France', 'Paris');
+  //addAuthor('Alice', 'Poland', 'Warsaw');
+  //addAuthor('Bob', 'England', 'London');
+  //addAuthor('Christine', 'France', 'Paris');
   addBook('First Book', [0, 1]);
-  addBook('Second Book', [2]);
-  addBook('Third Book', [3]);
+  //addBook('Second Book', [2]);
+  //addBook('Third Book', [3]);
 }
 
 prepareData();

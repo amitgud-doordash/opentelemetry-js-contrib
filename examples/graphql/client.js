@@ -13,6 +13,7 @@ query {
       address {
         country
       }
+      description
     }
   }
 }
